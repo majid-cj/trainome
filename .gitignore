@@ -1,0 +1,31 @@
+.idea
+.vscode
+# Created by https://www.gitignore.io
+
+
+# Thumbnails
+._*
+
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+venv
+media
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+db.sqlite3
+run.sh
+.env

@@ -1,0 +1,390 @@
+{% extends '../../base.html' %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block stylesheet %}
+
+<style>
+
+.comments-list{
+    max-height: 400px; 
+    overflow: auto;
+}
+
+.comment-item{
+    background: transparent;
+    padding: 4px;
+    margin: 4px;
+    height: 70px;
+    overflow: auto;
+}
+
+.navbar:not(.top-nav-collapse) {
+    background: teal !important;
+}
+
+header {
+    height: 0%;
+}
+
+@media (max-width: 740px) {
+    header {
+        height: 0vh;
+    }
+}
+
+</style>
+
+{% endblock %}
+
+{% block nav_menu %}{% endblock %}
+
+{% block registration %}{% endblock %}
+{% block language %}{% endblock %}
+
+
+{% block content %}
+    <div class="col-12 mt-5 pt-5">
+        <div class="row justify-content-around">
+            <img class="col-md-4 m-md-2 course-cover-details" src="{{course.cover.url}}"/>
+            <div class="col-md-6 mt-5">
+                <p class="who-we-are-header text-right">{{course.name}}</p>
+                <p class="text-right">{{course.description}}</p>
+                {% if LANGUAGE_CODE == "ar" %}
+                <div class="form-inline text-left">
+                {% else %}
+                <div class="form-inline text-right">
+                {% endif %}
+                    <div class="col-6 p-1">
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <div class="yellow-line-details-ar"></div>
+                        {% else %}
+                        <div class="yellow-line-details-en"></div>
+                        {% endif %}
+                        <p class="h2-responsive">{{course.trainee}} <i class="fas fa-chalkboard-teacher"></i></p>
+                    </div>
+                    <div class="col-6 p-1">
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <div class="yellow-line-details-ar"></div>
+                        {% else %}
+                        <div class="yellow-line-details-en"></div>
+                        {% endif %}
+                        <p class="h2-responsive">{{course.center.name}} <i class="fas fa-school"></i></p>
+                    </div>
+                </div>
+                {% if LANGUAGE_CODE == "ar" %}
+                <div class="form-inline text-left">
+                {% else %}
+                <div class="form-inline text-right">
+                {% endif %}
+                    <div class="col-6 p-1">
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <div class="yellow-line-details-ar"></div>
+                        {% else %}
+                        <div class="yellow-line-details-en"></div>
+                        {% endif %}
+                        <p class="h2-responsive">{{course.price}} SDG <i class="fas fa-dollar-sign"></i></p>
+                        <p id="h2-responsive">{% trans "discount" %} % {{course.discount}}</p>
+                    </div>
+                    <div class="col-6 p-1">
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <div class="yellow-line-details-ar"></div>
+                        {% else %}
+                        <div class="yellow-line-details-en"></div>
+                        {% endif %}
+                        <p class="h2-responsive">{{course.get_rates}} <i class="far fa-chart-bar"></i></p>
+                        {% if not payment %}
+                            <a 
+                            class="btn-access text-right white-text"
+                            data-toggle="modal" data-target="#payment-model"
+                            >{% trans "access" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row m-2">
+        {% if LANGUAGE_CODE == "ar" %}
+        <div class="col-lg-5 col-md-5 col-12 m-auto text-right">
+        {% else %}
+        <div class="col-lg-5 col-md-5 col-12 m-auto text-left">
+        {% endif %}
+            <p class="h2-responsive col-10 mb-3 attend">{% trans "lectures List" %} ({{attend}}/{{course.lectures}})</p>
+            {% for lecture in lectures %}
+            <p id="{{lecture.pk}}" class="lecture-title"><i class="fas fa-play m-2 teal-ic"></i>{{lecture.name}}</p>
+            {% endfor %}
+        </div>
+        <div class="col-lg-5 col-md-5 col-12 m-auto">
+            <div class="embed-responsive embed-responsive-4by3">
+                <video
+                    id="lecture-player" controls controlsList="nodownload">
+                    <source src="" type="video/webm">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+    <hr class="hr-dark col-10">
+    <div class="row m-3">
+        {% if LANGUAGE_CODE == "ar" %}
+        <div class="col-md-5 col-12 text-right">
+        {% else %}
+        <div class="col-md-5 col-12 text-left">
+        {% endif %}
+            <textarea class="form-control black-text" row=3 placeholder="{% trans 'write comment' %}" style="resize:none;"></textarea>
+            <a class="access-comment btn btn-sm add-comment">{% trans "comment" %}</a>
+        </div>
+        {% if LANGUAGE_CODE == "ar" %}
+        <div class="col-md-6 col-12 text-left" id="comment-view"></div>
+        {% else %}
+        <div class="col-md-6 col-12 text-right" id="comment-view"></div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block modals %}
+{% if LANGUAGE_CODE == "en" %}
+<div class="modal fade text-left" id="payment-model" tabindex="-1" role="dialog" aria-labelledby="payment-model"
+  aria-hidden="true" dir="ltr">
+{% else %}
+<div class="modal fade text-right" id="payment-model" tabindex="-1" role="dialog" aria-labelledby="payment-model"
+  aria-hidden="true" dir="rtl">
+{% endif %}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header text-center">
+            <p class="modal-title w-100 font-weight-bold h4-responsive">{% trans "Upload Payment Screenshot" %}</p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body mx-3">
+            <ul class="nav nav-tabs justify-content-between" id="payment-tab" role="tablist">
+                <li class="nav-item col-6 text-center">
+                    <a class="nav-link active" id="step-1-tab" data-toggle="tab" href="#step-1" role="tab" aria-controls="step-1"
+                    aria-selected="true">{% trans "Step 1" %}</a>
+                </li>
+                <li class="nav-item col-6 text-center">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#step-2" role="tab" aria-controls="step-2"
+                    aria-selected="false">{% trans "Step 2" %}</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="payment-tab-content">
+                <div class="tab-pane fade show active" id="step-1" role="tabpanel" aria-labelledby="step-1-tab">
+                    {% if LANGUAGE_CODE == "en" %}
+                    <img class="sc-en" src="{% static 'img/payment-qr-code.png' %}"/>
+                    {% else %}
+                    <img class="sc-ar" src="{% static 'img/payment-qr-code.png' %}"/>
+                    {% endif %}
+                    <div class="mt-2 text-center">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="mbok-option" name="payment-option">
+                            <label class="custom-control-label" for="mbok-option">Mbok</label>
+                        </div>
+
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="syber-pay-option" name="payment-option">
+                            <label class="custom-control-label" for="syber-pay-option">SyberPay</label>
+                        </div>
+                    </div>
+                    <ul>
+                        <li>
+                            1 - {% trans "after paying course's fees with one of our payment methods" %}
+                            <small class="form-text text-muted">
+                            {% trans "you can scane the QR code for fatser paying process" %}
+                            </small>
+                        </li>
+                        <li>2 - {% trans "keep a screenshot of payment receipt" %}</li>
+                        <li><p>3 - {% trans "to continue click on" %} <strong class="blue-text">{% trans "Step 2 tab" %}</strong></p></li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade py-3" id="step-2" role="tabpanel" aria-labelledby="step-2-tab">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="screenshot-file"
+                            aria-describedby="screenshot-file">
+                            <label class="custom-file-label" for="screenshot-file">{% trans "Choose file" %}</label>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">
+                    {% trans "upload the receipt screenshot you took before" %}
+                    </small>
+                    <input id="phone-number" class="form-control mt-2 mb-2" type="phone" placeholder="+249xxxxxxxxx {% trans 'is valid' %}" dir="ltr">
+                    <small class="form-text text-muted">
+                    {% trans "enter an active phone number so our team can keep up with you" %}
+                    </small>
+                    <a class="btn-payment btn-md white-text">{% trans "Proceed" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        noContext = document.getElementById('lecture-player');
+
+        noContext.addEventListener('contextmenu', e => {
+            e.preventDefault();
+        });
+        $('.lecture-title').on('click', function(){
+            $.ajax({
+                url: `api/course/${this.id}/lectures/lecture/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => setVideo(response, xhr),
+            });
+        })
+
+        $('.add-comment').on('click', function(){
+            $.ajax({
+                url: `../api/course/{{request.resolver_match.kwargs.pk}}/comment/`,
+                method: "post",
+                data: JSON.stringify({
+                    'course': {{request.resolver_match.kwargs.pk}},
+                    'account': {{user.pk}},
+                    'comment': $.trim($("textarea").val()),
+                }),
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: () => initView(),
+            });
+        })
+
+        $('.btn-payment').on('click', function(){
+            let formData = new FormData();
+            formData.append('payment', $('#screenshot-file').prop("files")[0])
+            formData.append('phone', $.trim($('#phone-number').val()))
+            $.ajax({
+                url: `../api/course/{{request.resolver_match.kwargs.pk}}/payment/`,
+                method: "POST",
+                processData: false,
+                contentType: false,
+                async: false,
+                cache: false,
+                data: formData,
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}')
+            }).done(xhr => formError(xhr, 'payment-model'))
+            .fail(xhr => formError(xhr, 'payment-model'))
+        })
+
+        function setVideo(response, xhr){
+            if (xhr.status === 200){
+                $('video').css('visibility', 'visible').attr('src', response.data.file)
+                $('.attend').text(`lectures List (${response.attend}/{{course.lectures}})`)
+            }
+        }
+
+        $(document).ready(()=> initView())
+
+        function initView(){
+            $("textarea").val('')
+            $.ajax({
+                url: `../api/course/{{request.resolver_match.kwargs.pk}}/comment/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => commentList(response, xhr),
+                error: (response, statusText, xhr) => commentList(response, xhr),
+            })
+        }
+
+        function commentList(response, xhr){
+             if (response['count'] != 0){
+                 let total = response['count']
+                $('#comment-view')
+                .empty()
+                .append(`<div class="comment-count col-lg-3 col-5 text-center">
+                    ${
+                    (total > 1000000)?
+                                    Number((total/1000000).toFixed(1)) + 'M' : 
+                    (total > 1000)?
+                                    Number((total/1000).toFixed(1)) + 'K' : total
+                    }
+                    {% trans "comments" %}</div>`)
+                .append(`<ul class="list-unstyled col-12 comments-list"></ul>`)
+                response['results'].forEach(comment => {
+                    $('#comment-view')
+                    .find('.comments-list')
+                    .append(`<li class="comment-item">
+                                ${comment.account.first_name} ${comment.account.last_name}
+                                <p>${comment.comment}</p>
+                            </li>`)
+                })
+
+                if(response['count'] > 25){
+                    $('#comment-view').append(`<nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item disabled previous">
+                                                    <a class="page-link"><i class="far fa-hand-point-left"></i></a>
+                                                </li>
+                                                <li class="page-item disabled next">
+                                                    <a class="page-link"><i class="far fa-hand-point-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </nav>`)
+
+                    if (response['previous'] !== null){
+                        $('.previous').removeClass("disabled")
+                        $('.previous').on('click', function(){
+                            $.ajax({
+                                url: response['previous'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                                success: (response, statusText, xhr) => commentList(response, xhr),
+                            });
+                        })
+                    }
+
+                    if (response['next'] !== null){
+                        $('.next').removeClass("disabled")
+                        $('.next').on('click', function(){
+                            $.ajax({
+                                url: response['next'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                                success: (response, statusText, xhr) => commentList(response, xhr),
+                            });
+                        })
+                    }
+                }
+            }else{
+                $('#comment-view')
+                    .empty()
+                    .append(`<div class="text-center alert col-8"
+                            style="margin:auto;margin-top:4px;font-size:12px;font-weight:bold;" role="alert">
+                            {% trans "no comments" %}
+                        </div>`);
+            }
+        }
+
+        function formError(xhr, _modal) {
+            let warning = (xhr.status == 200 || (xhr.error == false))? 'alert-success': 'alert-danger'
+            let response = (xhr.responseText !== null && typeof xhr.responseText == 'string')? JSON.parse(xhr.responseText): xhr
+            for (var key in response){
+                if (typeof response[key] !== "boolean"){
+                    $(`#${_modal}`)
+                        .find('.modal-body')
+                        .append(`<div class="text-center alert col-lg-12 ${warning}"
+                                    style="margin:auto;margin-top:4px;font-size:12px;font-weight:bold;" role="alert">
+                                    ${response[key]}
+                                </div>`);
+                }
+            }
+            setTimeout(() => {
+                if (warning == 'alert-success'){
+                    $('.alert, .btn-access').remove()
+                    $('#payment-model').modal('toggle')
+                }
+                $('.alert').remove()
+            }, 5000)
+        }
+    </script>
+{% endblock %}

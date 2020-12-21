@@ -1,0 +1,31 @@
+{% extends '../../base_account.html' %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block nav_bar %}{% endblock %}
+
+{% block content %}
+
+<div class="regist-cover"></div>
+
+<a href="{% url 'frontend:index' %}">
+    <img src="{% static 'img/logo.png' %}"/>
+</a>
+
+{% if LANGUAGE_CODE == "ar" %}
+<form class="text-center border border-light p-2 form_signup" method="post" novalidate dir="rtl">
+{% else %}
+<form class="text-center border border-light p-2 form_signup" method="post" novalidate dir="ltr">
+{% endif %}
+    <p class="h5-responsive mb-4">{% trans "Sign up" %}</p>
+    {% csrf_token %}
+
+    {% include '../../includes/form.html' %}
+    <button class="btn btn-teal btn-sm m-2" type="submit">{% trans "Sign up" %}</button>
+    <p>{% trans "already got an account ?" %}
+        <a href="{% url 'frontend:signin' %}">{% trans "Sign in" %}</a>
+    </p>
+</form>
+
+{% endblock %}

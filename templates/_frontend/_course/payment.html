@@ -1,0 +1,32 @@
+{% extends '../../base.html' %}
+{% load static %}
+{% load i18n %}
+{% block stylesheet %}
+<style>
+.container-fluid{
+  height: 100%;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<main class="container-fluid">
+  <a href="{% url 'frontend:course' request.resolver_match.kwargs.pk %}"><i class="fas fa-arrow-left back"></i></a>
+  <div class="row justify-content-center mt-5">
+    <div class="col-lg-6 col-md-6 col-sm-8">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="card-title text-capitalize">{% trans "Pay Course Fees" %}</h3>
+          <form method="post" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {% include '../../includes/form.html' %}
+            <button type="submit" class="btn btn-sm btn-teal text-capitalize">{% trans "Pay" %}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

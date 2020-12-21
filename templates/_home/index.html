@@ -1,0 +1,290 @@
+{% extends '../base.html' %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load static %}
+
+{% block stylesheet %}
+    <style>
+        img{
+            max-width:75px;
+            height:75px;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:8px;
+            margin-bottom:8px;
+        }
+    </style>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">{% trans "Home" %}</li>
+{% endblock %}
+
+{% block content %}
+    {% if user.check_is_superuser %}
+        <div class="form-inline">
+            <a class="btn btn-primary btn-sm text-capitalize add_menu">{% trans "Create Menu" %}</a>
+            <a class="btn btn-primary btn-sm text-capitalize add_permission">{% trans "Menu Permissions" %}</a>
+        </div>
+    {% endif %}
+
+    <div class="row menu-view">
+    </div>
+{% endblock %}
+
+{% block modals %}
+    <div class="modal fade" id="addhomemenumodal" tabindex="-1" role="dialog" aria-labelledby="addhomemenumodal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addhomemenumodal">{% trans "Add Menu" %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <select class="browser-default custom-select m-1"></select>
+                    <select class="browser-default custom-select m-1">
+                        <option value="0">{% trans "select menu display priority" %}</option>
+                    </select>
+                    <div class="input-group m-1">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="add_menu_span">{% trans "Upload" %}</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="add_menu_logo"
+                            aria-describedby="add_menu_span">
+                            <label class="custom-file-label" for="add_menu_logo">{% trans "Choose file" %}</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">{% trans "close" %}</button>
+                <button type="button" class="btn btn-sm btn-success">{% trans "save" %}</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="permissionmodal" tabindex="-1" role="dialog" aria-labelledby="permissionmodal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="permissionmodal">{% trans "Menu Permissions" %}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row"></div>
+                    <hr style="height: 4px;background-color:dodgerblue;margin:8px;">
+                    <div class="user_type"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        let menus = {
+            'Manage Members':"../member/",
+            'Manage Trending Profiles':"../member/trend/",
+            'Manage Publishers':"../publishers/",
+            'Manage Advertisements':"../ads/",
+            'Manage Requests':"../requests/desc/",
+            'Manage Notifications':"../notifications/",
+            'Books Upload Requests':"../book/upload/book/",}
+        let priorities = [1, 2, 3, 4, 5, 6, 7]
+        for (var key in menus){
+            $('#addhomemenumodal').find('.custom-select:nth-child(1)').append(`<option value="${menus[key]}">${key}</option>`)
+        }
+        priorities.forEach(p => $('#addhomemenumodal').find('.custom-select:nth-child(2)').append(`<option value="${p}">${p}</option>`))
+        $(document).ready(()=> initView())
+        $('.add_menu').on('click', (e)=>{
+            e.preventDefault()
+            $('#addhomemenumodal')
+                .modal('show')
+                .find('form')[0].reset()
+            $('#addhomemenumodal')
+                .modal('show')
+                .find('.btn-success')
+                .on('click', function(){
+                    let formData = new FormData();
+                    formData.append('menu_name', $('#addhomemenumodal')
+                                                    .find('.custom-select:nth-child(1) option:selected')
+                                                    .text())
+                    formData.append('menu_url', $('#addhomemenumodal')
+                                                    .find('.custom-select:nth-child(1) option:selected')
+                                                    .val())
+                    formData.append('menu_priority', $('#addhomemenumodal')
+                                                    .find('.custom-select:nth-child(2) option:selected')
+                                                    .val())
+                    formData.append('menu_logo', $('#addhomemenumodal')
+                                                    .find('.custom-file-input')
+                                                    .prop("files")[0])
+                    $.ajax({
+                        url: "api/admin/addmenu/",
+                        method: "POST",
+                        processData: false,
+                        contentType: false,
+                        async: false,
+                        cache: false,
+                        data: formData,
+                        beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}')
+                    }).done(xhr => formError(xhr, 'addhomemenumodal'))
+                    .fail(xhr => formError(xhr, 'addhomemenumodal'))
+                })
+        })
+
+        $('.add_permission').on('click', (e)=>{
+            e.preventDefault()
+            getMenus()
+        })
+
+        function getMenus(){
+            $('#permissionmodal')
+                .modal('show')
+                .find('.row, .user_type')
+                .empty()
+            $.ajax({
+                url: `api/admin/getmenu/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => menuList(response, xhr),
+            })
+        }
+
+        function menuList(response, xhr){
+            if(xhr.status == 200){
+                response.data.forEach(element => {
+                    $('#permissionmodal')
+                        .find('.row')
+                        .append(`<div class="custom-control custom-radio col-lg-10 m-1">
+                                    <input type="radio" class="custom-control-input"
+                                        id="menu_${element.pk}" name="menu_group" onclick="viewTypes(${element.pk})">
+                                    <label class="custom-control-label" for="menu_${element.pk}">${element.menu_name}</label>
+
+                                    <a onclick="deleteMenu(${element.pk})" class="fa-stack red-text" style="font-size:10px;">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-trash fa-stack-1x fa-inverse"></i>
+                                    </a>
+                                </div>`)
+                })
+            }
+        }
+
+        function deleteMenu(id){
+            $.ajax({
+                url: `api/admin/menu/${id}/delete/`,
+                method: "delete",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => {
+                    if(xhr.status == 200){
+                        getMenus()
+                        initView()
+                    }
+                },
+            })
+        }
+
+        function viewTypes(id){
+            $.ajax({
+                url: `api/admin/gettypes/${id}/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => typesList(response, xhr, id),
+            })
+        }
+
+        function typesList(response, xhr, id){
+            $('.user_type').empty()
+            response.data.forEach(element => {
+                console.log(`${element.pk}`)
+                $('.user_type')
+                    .append(`<div class="custom-control custom-checkbox mt-auto mb-auto ml-2">
+                                <input type="checkbox" class="custom-control-input" id="type_${element.pk}"
+                                onclick="addPermission(this, ${id}, ${element.pk})">
+                                <label class="custom-control-label" for="type_${element.pk}">${element.type_name}</label>
+                            </div>`).find(`#type_${element.pk}`)
+                                    .prop("checked", (element.permission == null)? false: true)
+            })
+        }
+
+        function addPermission(button, menu, type){
+            if(button.checked){
+                $.ajax({
+                    url: `api/admin/addpermission/`,
+                    method: "post",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({'menu':menu, 'type':type}),
+                    beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                    success: xhr => formError(xhr, 'permissionmodal'),
+                })
+            }else{
+                $.ajax({
+                    url: `api/admin/deletepermission/`,
+                    method: "delete",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({'menu':menu, 'type':type}),
+                    beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                    success: xhr => formError(xhr, 'permissionmodal'),
+                })
+            }
+        }
+
+
+        function initView(){
+            $.ajax({
+                url: `api/admin/getpermission/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => drawView(response, xhr),
+                error: xhr => drawView(null, xhr),
+            })
+        }
+
+        function drawView(response, xhr){
+            $('.menu-view').empty()
+            if(xhr.status !== 200){
+                $('.menu-view').append(`<div class="note note-danger text-wrap m-auto col-lg-8 text-center"
+                                            style="margin:auto;margin-top:4px;font-size:14px;font-weight:bold;">
+                                            no permissions are given to any menu
+                                        </div>`)
+            }else{
+                response.data.forEach(element => {
+                    $('.menu-view').append(`<a class="card m-1 col-lg-3 col-md-5 col-5 text-center" href="${element.menu.menu_url}">
+                                                <img src="${element.menu.menu_logo}" class="card-img-top rounded"/>
+                                                <div class="card-title">${element.menu.menu_name}</div>
+                                            </a>`)
+                })
+            }
+        }
+
+        function formError(xhr, _modal) {
+            let warning = (xhr.status == 200 || (xhr.error == false))? ['alert-success', 3000]: ['alert-danger', 5000]
+            let response = (xhr.responseText !== null && typeof xhr.responseText == 'string')? JSON.parse(xhr.responseText): xhr
+            for (var key in response){
+                if (typeof response[key] !== "boolean"){
+                    $(`#${_modal}`)
+                        .find('.modal-body')
+                        .append(`<div class="text-center alert col-lg-12 ${warning[0]}"
+                                    style="margin:auto;margin-top:4px;font-size:12px;font-weight:bold;" role="alert">
+                                    ${response[key]}
+                                </div>`);
+                }
+            }
+            setTimeout(() => {
+                $('.alert').remove()
+                initView()
+            }, warning[1])
+        }
+    </script>
+{% endblock %}

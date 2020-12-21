@@ -1,0 +1,35 @@
+{% extends '../../base_account.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block nav_bar %}{% endblock %}
+
+{% block content %}
+
+<div class="regist-cover"></div>
+
+<a href="{% url 'frontend:index' %}">
+    <img src="{% static 'img/logo.png' %}"/>
+</a>
+
+{% if LANGUAGE_CODE == "ar" %}
+<form class="text-center border border-light p-2 form_signin" method="post" novalidate dir="rtl">
+{% else %}
+<form class="text-center border border-light p-2 form_signin" method="post" novalidate dir="ltr">
+{% endif %}
+    <p class="h4 mb-4">{% trans "Sign in" %}</p>
+    {% csrf_token %}
+    {% csrf_token %}
+
+    <input type="hidden" name="next" value="{{ next }}">
+    {% include '../../includes/form.html' %}
+    <button class="btn btn-teal btn-sm m-2" type="submit">{% trans "Sign in" %}</button>
+    <p>{% trans "Not a member?" %}
+        <a href="{% url 'frontend:signup' %}">{% trans "Register" %}</a>
+    </p>
+    <p class="mb-5">{% trans "Forgot your password ?" %}
+        <a href="{% url 'password_reset' %}">{% trans "Reset from here" %}</a>
+    </p>
+</form>
+
+{% endblock %}

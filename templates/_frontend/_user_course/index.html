@@ -1,0 +1,193 @@
+{% extends '../../base_panel.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block stylesheet %}
+<style>
+    .container-fluid{
+        height: 500px;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="py-5 my-5 col-lg-6 col-12 course-wrapper">
+    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active teal-text font-weight-bolder" 
+            id="new-uploads-tab" data-toggle="tab" 
+            href="#new-uploads" role="tab" aria-controls="new-uploads"
+            aria-selected="true">{% trans "Accessed Courses" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link teal-text font-weight-bolder" id="accepted-uploads-tab" 
+            data-toggle="tab" href="#accepted-uploads" 
+            role="tab" aria-controls="accepted-uploads"
+            aria-selected="false">{% trans "Requested Courses" %}</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="new-uploads" role="tabpanel" aria-labelledby="new-uploads-tab">
+            <div class="form-inline">
+                <input id="new-search"
+                 class="form-control m-1 col-lg-6 col-md-7 col-sm-10" type="text" placeholder='{% trans "search accessed courses" %}'>
+                <div id="new-uploads-counter"
+                disabled class="form-control m-1 col-lg-3 col-md-4 col-sm-10 bg-light text-center" type="text"></div>
+            </div>
+            <div id="access-courses"></div>
+            <div class="error_message_access"></div>
+        </div>
+        <div class="tab-pane fade" id="accepted-uploads" role="tabpanel" aria-labelledby="accepted-uploads-tab">
+            <div class="form-inline">
+                <input id="accept-search"
+                class="form-control m-1 col-lg-6 col-md-7 col-sm-10" type="text" placeholder='{% trans "search  requesteded courses" %}'>
+                <div id="accept-uploads-counter"
+                disabled class="form-control m-1 col-lg-3 col-md-4 col-sm-10 bg-light text-center" type="text"></div>
+            </div>
+            <div id="request-courses"></div>
+            <div class="error_message_request"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block javascript %}
+    <script>
+        $(document).ready(()=>initView())
+
+        $('#new-search').on('keyup', function(){
+            $.ajax({
+                url: `../api/course/access/search/?search=${this.value}`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => drawView(response, xhr, 'new-uploads-counter', 'access-courses', 'error_message_access'),
+                error: (response, xhr) => drawView(response, xhr, 'new-uploads-counter', 'access-courses', 'error_message_access'),
+            });
+        })
+
+        $('#accept-search').on('keyup', function(){
+            $.ajax({
+                url: `../api/course/request/search/?search=${this.value}`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => drawView(response, xhr, 'new-uploads-counter', 'access-courses', 'error_message_access'),
+                error: (response, xhr) => drawView(response, xhr, 'new-uploads-counter', 'access-courses', 'error_message_access'),
+            });
+        })
+
+        function drawView(response, xhr, counter_view, view_id, error_view){
+            let total = response['count']
+            if (total > 0){
+                let count = 0;
+                $(`#${counter_view}`).empty().text(`${(total > 1000000)?
+                                                        Number((total/1000000).toFixed(1)) + 'M' : (total > 1000)?
+                                                        Number((total/1000).toFixed(1)) + 'K' : total} {% trans "Course" %}`)
+                $(`#${view_id}`).empty().append(`<div class="row"></div>`)
+                response['results'].forEach(course => {
+                    let url = "{% url 'frontend:course' 1234 %}".replace('/1234/', `/${course.pk}/`)
+                    let original_price = course.price
+                    let price = course.price - ((course.discount/100) * course.price)
+                    $(`#${view_id}`).
+                    find('.row')
+                    .append(`<a href="${url}" class="course-card">
+                                <img src="${course.cover}"/>
+                                <p>${course.name}</p>
+                                ${
+                                    (course.discount > 0) ?
+                                    `
+                                    <div class="form-inline">
+                                        <div class="original-price">${original_price}</div>
+                                        <div class="discount-price">${price} SDG</div>
+                                    </div>
+                                    `:
+                                    `
+                                    <div class="form-inline">
+                                        <p class="discount-price">${price} SDG</p>
+                                    </div>
+                                    `
+                                }
+                                <div class="form-inline">
+                                    <p>${course.details.rate}<i class="fas fa-chart-line m-1"></i></p>
+                                    <p>${course.details.view}<i class="far fa-eye m-1"></i></p>
+                                </div>
+                            </a>`)
+                })
+
+                if(response['count'] > 8){
+                    $(`#${view_id}`).append(`<nav aria-label="Page navigation example">
+                                            <ul class="pagination pg-blue">
+                                                <li class="page-item disabled previous">
+                                                    <a class="page-link">{% trans "Previous" %}</a>
+                                                </li>
+                                                <li class="page-item disabled next">
+                                                    <a class="page-link">{% trans "Next" %}</a>
+                                                </li>
+                                            </ul>
+                                        </nav>`)
+
+                    if (response['previous'] !== null){
+                        $('.previous').removeClass("disabled")
+                        $('.previous').on('click', function(){
+                            $.ajax({
+                                url: response['previous'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                                success: (response, statusText, xhr) => drawView(response, xhr, counter_view, view_id, error_view),
+                                error: xhr => drawView(null, xhr, counter_view, view_id, error_view),
+                            });
+                        })
+                    }
+
+                    if (response['next'] !== null){
+                        $('.next').removeClass("disabled")
+                        $('.next').on('click', function(){
+                            $.ajax({
+                                url: response['next'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                                success: (response, statusText, xhr) => drawView(response, xhr, counter_view, view_id, error_view),
+                                error: xhr => drawView(null, xhr, counter_view, view_id, error_view),
+                            });
+                        })
+                    }
+                }
+            }else{
+                $(`#${counter_view}`).empty().text(`0 Requests`)
+                $(`#${view_id}`)
+                    .empty()
+                    .append(`<div class="text-center alert col-lg-4 col-10 alert-danger"
+                            style="margin:auto;margin-top:150px;font-size:12px;font-weight:bold;" role="alert">
+                            {% trans "No Courses" %}
+                        </div>`);
+            }
+        }
+
+        function initView(){
+            $.ajax({
+                url: `../api/course/access/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => drawView(response, xhr, 'new-uploads-counter', 'access-courses', 'error_message_access'),
+                error: (response, xhr) => drawView(response, xhr, 'new-uploads-counter', 'access-courses', 'error_message_access'),
+            });
+
+            $.ajax({
+                url: `../api/course/request/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: xhr => xhr.setRequestHeader("Authorization", 'Token {{user.get_auth_token}}'),
+                success: (response, statusText, xhr) => drawView(response, xhr, 'accept-uploads-counter', 'request-courses', 'error_message_request'),
+                error: (response, xhr) => drawView(response, xhr, 'accept-uploads-counter', 'request-courses', 'error_message_request'),
+            });
+        }
+    </script>
+{% endblock %}

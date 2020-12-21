@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h1 class="text-center logo my-4">
+      <a href="{% url 'frontend:index' %}"><img src="{% static 'img/favicon.png' %}" alt=""></a>
+    </h1>
+    {% block content %}
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    if ($(".invalid-tooltip")[0]){
+      $(".invalid-tooltip").on('mouseover', function(){
+        $(".invalid-tooltip").remove()
+      })
+      setInterval(()=> $(".invalid-tooltip").remove(), 5000)
+    }
+  </script>
+{% endblock %}

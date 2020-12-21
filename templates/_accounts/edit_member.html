@@ -1,0 +1,26 @@
+{% extends "../base.html" %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block title %}{% trans "Edit" %} {{member.name}}{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home:index' %}">{% trans "Home" %}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'accounts:index' %}">{% trans "Manage Members" %}</a></li>
+  <li class="breadcrumb-item active">{% trans "Edit" %} {{member.name}}</li>
+{% endblock %}
+
+{% block content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include '../includes/form.html' %}
+    <button type="submit" class="btn btn-sm btn-success btn-block m-auto col-lg-2">{% trans "Edit" %}</button>
+  </form>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    $('#id_password').prop('hidden', true)
+  </script>
+{% endblock %}

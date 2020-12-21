@@ -1,0 +1,370 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block intro %}
+    <div class="view jarallax" 
+        data-jarallax='{"speed": 0.2}' 
+        style="background-image: url('{% static 'img/cover.jpg' %}'); 
+            background-repeat: no-repeat; 
+            background-size: cover; 
+            background-position: 
+            center center;">
+        <div class="mask rgba-teal-strong d-flex justify-content-center align-items-center">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 mb-4 white-text text-center">
+                <h1 class="text-home h3-reponsive white-text mb-0 pt-md-5 pt-5 wow fadeInDown"
+                  data-wow-delay="0.3s"><strong>{% trans "Build your skills for the better" %}</strong></h1>
+                <h5 class="text-home mb-4 white-text wow fadeInDown" data-wow-delay="0.4s">
+                    {% trans "Through this platform you can take courses and training courses from various centers and institutes and from highly qualified trainers and teachers and a certified certificate" %}
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="courses">
+        <div class="col-lg-6 col-8 m-auto p-1 home-search">
+            <div class="active-cyan-4 mb-4 col-lg-12 mt-3">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+            </div>
+        </div>
+        <div id="category_list" class="row col-12 justify-content-start py-3"></div>
+        <div class="col-12">
+            <p class="h2-responsive text-center teal-text font-weight-bolder">{% trans "Most Requested Courses" %}</p>
+            <div id="courses_list" class="mr-auto ml-auto"></div>
+            <nav class="course-navigations" dir="ltr">
+                <ul class="pagination">
+                    <li class="page-item disabled course-previous">
+                        <a><i class="fas mr-1 fa-chevron-circle-left fa-2x "></i></a>
+                    </li>
+                    <li class="page-item disabled course-next">
+                        <a><i class="fas ml-1 fa-chevron-circle-right fa-2x "></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="col-12 mt-5 mb-5" id="training-centers">
+        <p class="h2-responsive text-center teal-text font-weight-bolder">{% trans "Training Centers" %}</p>
+        <div id="centers_list" class="mr-auto ml-auto"></div>
+        <nav class="center-navigations">
+            <ul class="pagination" dir="ltr">
+                <li class="page-item disabled center-previous">
+                    <a><i class="fas mr-1 fa-chevron-circle-left fa-2x "></i></a>
+                </li>
+                <li class="page-item disabled center-next">
+                    <a><i class="fas ml-1 fa-chevron-circle-right fa-2x "></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="col-12 mb-5" id="who-we-are">
+        <p class="h2-responsive text-center teal-text font-weight-bolder">{% trans "Who are we" %}</p>
+        <div class="row justify-content-around">
+            <img class="col-md-4 m-md-2 who-we-are-image" src="{% static 'img/header.png' %}"/>
+            <div class="col-md-6 m-md-2">
+                {% if LANGUAGE_CODE == "ar" %}
+                <p class="who-we-are-header text-right">
+                {% else %}
+                <p class="who-we-are-header text-left">
+                {% endif %}
+                    {% trans "Welcome To" %} <strong>Trainome</strong>
+                </p>
+                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et</p>
+                
+                <div class="form-inline">
+                    <div class="col-6 p-1">
+                        <div class="yellow-line"></div>
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <p class="h2-responsive text-right">
+                        {% else %}
+                        <p class="h2-responsive text-left">
+                        {% endif %}
+                            <i class="far fa-clone"></i> {% trans "Our Mission" %}
+                        </p>
+                        </p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                        </p>
+                    </div>
+                    <div class="col-6 p-1">
+                        <div class="yellow-line"></div>
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <p class="h2-responsive text-right">
+                        {% else %}
+                        <p class="h2-responsive text-left">
+                        {% endif %}
+                            <i class="far fa-eye"></i> {% trans "Our Vission" %}
+                        </p>
+                        </p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                        </p>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <div class="col-6 p-1">
+                        <div class="yellow-line"></div>
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <p class="h2-responsive text-right">
+                        {% else %}
+                        <p class="h2-responsive text-left">
+                        {% endif %}
+                            <i class="fas fa-fingerprint"></i> {% trans "Key Feature" %}
+                        </p>
+                        </p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                        </p>
+                    </div>
+                    <div class="col-6 p-1">
+                        <div class="yellow-line"></div>
+                        {% if LANGUAGE_CODE == "ar" %}
+                        <p class="h2-responsive text-right">
+                        {% else %}
+                        <p class="h2-responsive text-left">
+                        {% endif %}
+                            <i class="fas fa-chart-line"></i> {% trans "Our Goal" %}
+                        </p>
+                        </p>
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-12 col-xl-4 m-auto home-news-letter form-inline justify-content-lg-center" id="contact-us">
+        <p class="mt-auto mb-auto col-5 subscribe-text"> {% trans "Subscribe to our newsletter" %}</p>
+        <input class="form-control col-6 home-news-letter-email" type="email" placeholder="{% trans 'enter your email address' %}">
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script >
+         $(document).ready(()=> initView())
+        $('input').on('keyup', function(){
+            $.ajax({
+                url: `api/course/search/?search=${this.value}`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                success: (response, statusText, xhr) => drawView(response, xhr),
+            });
+        })
+
+        function initView(){
+            $.ajax({
+                url: `api/course/category/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                success: (response, statusText, xhr) => menuList(response, xhr),
+            })
+
+            $.ajax({
+                url: `api/course/list/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                success: (response, statusText, xhr) => drawView(response, xhr),
+            })
+
+            $.ajax({
+                url: `api/center/list/`,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                success: (response, statusText, xhr) => centerView(response, xhr),
+            })
+        }
+
+        function menuList(response, xhr){
+            $('#category_list').empty()
+            if(xhr.status == 200){
+                $('#category_list')
+                        .append(`<p class="category-chip" onclick="changeByCategory(0)">{% trans "All" %}</p>`)
+                response.data.forEach(element => {
+                    $('#category_list')
+                        .append(`<p class="category-chip" onclick="changeByCategory(${element.pk})">${element.categorty}</p>`)
+                })
+            }
+        }
+
+        function changeByCategory(category){
+            let url = (category == 0)?`api/course/list/`:`api/course/${category}/category/`
+            $.ajax({
+                url: url,
+                method: "get",
+                contentType: "application/json; charset=utf-8",
+                success: (response, statusText, xhr) => drawView(response, xhr),
+            });
+        }
+
+        function drawView(response, xhr){
+            $('#courses_list').empty()
+            if (response['count'] != 0){
+                $('#courses_list').append(`<div class="row course_body"></div>`)
+                response['results'].forEach(course => {
+                    let url = "{% url 'frontend:course' 1234 %}".replace('/1234/', `/${course.pk}/`)
+                    let original_price = course.price
+                    let price = course.price - ((course.discount/100) * course.price)
+                    let name = course.name.length > 15 ? course.name.substring(0, 15): course.name
+                    let center = course.center.name.length > 18 ? course.center.name.substring(0, 18): course.center.name
+                    $('.course_body').append(`<a href="${url}" class="course-card">
+                                                <img src="${course.cover}"/>
+                                                ${
+                                                    ("{{LANGUAGE_CODE}}" == "ar")?
+                                                    `
+                                                    <div class="form-inline justify-content-end" dir="rtl">
+                                                        <p id="card-course-name">${name}</p>
+                                                        <p id="text-black-50 card-course-rate small">
+                                                            <i class="far fa-eye teal-ic"></i>
+                                                            ${course.details.view}
+                                                        </p>
+                                                    </div>
+                                                    `
+                                                    :
+                                                    `
+                                                    <div class="form-inline justify-content-start" dir="ltr">
+                                                        <p id="card-course-name">${name}</p>
+                                                        <p id="text-black-50 card-course-rate small">
+                                                            <i class="far fa-eye teal-ic"></i>
+                                                            ${course.details.view}
+                                                        </p>
+                                                    </div>
+                                                    `
+                                                }
+                                                ${
+                                                    (course.discount > 0) ?
+                                                    `
+                                                    <div id="card-course-price" class="form-inline">
+                                                        <div class="original-price">${original_price}</div>
+                                                        <div class="discount-price">${price} SDG</div>
+                                                    </div>
+                                                    `:
+                                                    `
+                                                    <div id="card-course-price">
+                                                        <p class="discount-price">${price} SDG</p>
+                                                    </div>
+                                                    `
+                                                }
+                                                <div class="form-inline justify-content-end">
+                                                    <p id="card-course-center">${center}</p>
+                                                    <p id="card-course-lecture">${course.lectures} lectures</p>
+                                                </div>
+                                            </a>`)
+                })
+
+                if(response['count'] > 6){
+                    $('.course-navigations').css({'visibility': 'visible'})
+                    if (response['previous'] !== null){
+                        $('.course-previous').removeClass("disabled")
+                        $('.course-previous').on('click', function(){
+                            $.ajax({
+                                url: response['previous'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                success: (response, statusText, xhr) => drawView(response, xhr),
+                            });
+                        })
+                    }
+
+                    if (response['next'] !== null){
+                        $('.course-next').removeClass("disabled")
+                        $('.course-next').on('click', function(){
+                            $.ajax({
+                                url: response['next'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                success: (response, statusText, xhr) => drawView(response, xhr),
+                            });
+                        })
+                    }
+                }
+            }else{
+                $('#courses_list')
+                    .empty()
+                    .append(`<div class="text-center alert col-8"
+                            style="margin:auto;margin-top:4px;font-size:12px;font-weight:bold;" role="alert">
+                            {% trans "No Courses" %}
+                        </div>`);
+            }
+        }
+
+        function centerView(response, xhr){
+            $('#centers_list').empty()
+            if (response['count'] != 0){
+                $('#centers_list').append(`<div class="row center_body"></div>`)
+                response['results'].forEach(center => {
+                    let name = center.name.length > 25 ? center.name.substring(0, 25): center.name
+                    $('.center_body').append(`<div class="course-card">
+                                                <img src="${center.logo}"/>
+                                                <div class="form-inline text-center">
+                                                    <p id="card-course-name">${name}</p>
+                                                </div>
+                                                <div class="form-inline text-center">
+                                                    ${
+                                                        (center.map_location != null)?
+                                                        `
+                                                        <a 
+                                                            target="_blank" 
+                                                            href="${center.map_location}" 
+                                                            id="card-center-location">
+                                                            ${center.location} 
+                                                            <i class="fas fa-map-marked-alt fa-sm m-2 grey-ic"></i>
+                                                        </a>
+                                                        `
+                                                        :
+                                                        `
+                                                        <p
+                                                            id="card-center-location">
+                                                            ${center.location} 
+                                                            <i class="fas fa-map-marked-alt fa-sm m-2 grey-ic"></i>
+                                                        </p>
+                                                        `
+                                                    }
+                                                </div>
+                                            </div>`)
+                })
+
+                if(response['count'] > 6){
+                    $('.center-navigations').css({'visibility': 'visible'})
+                    if (response['previous'] !== null){
+                        $('.center-previous').removeClass("disabled")
+                        $('.center-previous').on('click', function(){
+                            $.ajax({
+                                url: response['previous'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                success: (response, statusText, xhr) => centerView(response, xhr),
+                            });
+                        })
+                    }
+
+                    if (response['next'] !== null){
+                        $('.center-next').removeClass("disabled")
+                        $('.center-next').on('click', function(){
+                            $.ajax({
+                                url: response['next'],
+                                method: "get",
+                                contentType: "application/json; charset=utf-8",
+                                success: (response, statusText, xhr) => centerView(response, xhr),
+                            });
+                        })
+                    }
+                }
+            }else{
+                $('#centers_list')
+                    .empty()
+                    .append(`<div class="text-center alert col-8"
+                            style="margin:auto;margin-top:4px;font-size:12px;font-weight:bold;" role="alert">
+                            {% trans "No Training Center" %}
+                        </div>`);
+            }
+        }
+    </script>
+{% endblock %}

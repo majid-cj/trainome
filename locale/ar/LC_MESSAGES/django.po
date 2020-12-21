@@ -1,0 +1,573 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-20 15:38+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: apps/accounts/forms.py:12 apps/accounts/forms.py:27
+#: apps/accounts/forms.py:55 apps/accounts/forms.py:82
+msgid "user email"
+msgstr "الإيميل"
+
+#: apps/accounts/forms.py:14
+msgid "password"
+msgstr "كلمة المرور"
+
+#: apps/accounts/forms.py:25
+msgid "user first name"
+msgstr "الإسم الاول"
+
+#: apps/accounts/forms.py:26 apps/accounts/forms.py:53
+#: apps/accounts/forms.py:54
+msgid "user last name"
+msgstr "الإسم الأخير"
+
+#: apps/accounts/forms.py:29 apps/accounts/forms.py:57
+#: apps/accounts/forms.py:102
+msgid "enter your password"
+msgstr "أدخل كلمة المرور"
+
+#: apps/accounts/forms.py:31 apps/accounts/forms.py:59
+#: apps/accounts/forms.py:103
+msgid "confirm your password"
+msgstr "تأكيد كلمة المرور"
+
+#: apps/accounts/forms.py:81
+msgid "user name"
+msgstr "إسم المستخدم"
+
+#: apps/accounts/forms.py:116
+msgid "Passwords don't match"
+msgstr "كلمة المرور غير متطابقة"
+
+#: apps/accounts/models.py:16
+msgid ""
+"user name should only contains white spaces, and minimum three characters"
+msgstr ""
+
+#: apps/accounts/models.py:23
+msgid "System Admin"
+msgstr "مسؤول عن النظام"
+
+#: apps/accounts/models.py:24
+msgid "Sub Admins"
+msgstr "مسؤولين فرعيين"
+
+#: apps/accounts/models.py:25
+msgid "End User"
+msgstr "مستخدم عادي"
+
+#: apps/accounts/serializers.py:49
+msgid "passwords didn't match"
+msgstr "كلمة المرور غير متطابقة"
+
+#: apps/api/views.py:60
+msgid "user email or password is wrong"
+msgstr "الإيميل او كلمة المرور غير صحيح"
+
+#: apps/api/views.py:83
+msgid "account created, login next"
+msgstr "تم إنشاء حساب, قم بتسجيل الدخول"
+
+#: apps/api/views.py:104 apps/api/views.py:125
+msgid "password updated successfully"
+msgstr "تم تغيير كلمة المرور"
+
+#: apps/api/views.py:106
+msgid "old password is invalid"
+msgstr "كلمة المرور السابقة غير صحيحة"
+
+#: apps/api/views.py:326
+msgid "payment done, our team will contact you soon"
+msgstr "تم الدفع, فريق الدعم سوف يتواصل معك قريبا"
+
+#: apps/api/views_admin.py:47
+msgid "menu created"
+msgstr ""
+
+#: apps/api/views_admin.py:51 apps/api/views_admin.py:74
+#: apps/api/views_admin.py:91
+msgid "error occured"
+msgstr "حدث خطأ"
+
+#: apps/api/views_admin.py:64
+msgid "permission created"
+msgstr ""
+
+#: apps/api/views_admin.py:70
+msgid "this menu is already created"
+msgstr ""
+
+#: apps/api/views_admin.py:87
+msgid "permission delete"
+msgstr ""
+
+#: apps/api/views_admin.py:113
+msgid "menu delete"
+msgstr ""
+
+#: apps/center/views.py:44 apps/center/views.py:71 apps/course/views.py:52
+#: apps/course/views.py:77 apps/course/views.py:117 apps/course/views.py:142
+msgid "error occured !"
+msgstr ""
+
+#: apps/common/validate_file.py:10
+msgid "unsupported file extension."
+msgstr "صيغة ملف غير مدعومة"
+
+#: apps/course/forms.py:24
+msgid "upload payment screenshot"
+msgstr "تحميل لقطة شاشة للدفع"
+
+#: apps/course/models.py:16
+msgid "Drwaing"
+msgstr "رسم"
+
+#: apps/course/models.py:17
+msgid "Programming"
+msgstr "برمجة"
+
+#: apps/course/models.py:18
+msgid "Adobe Package"
+msgstr "حزمة أدوبي"
+
+#: templates/_accounts/add_member.html:5 templates/_accounts/add_member.html:10
+msgid "New Member"
+msgstr "مستخدم جديد"
+
+#: templates/_accounts/add_member.html:8 templates/_accounts/edit_member.html:9
+#: templates/_accounts/edit_member_password.html:9
+#: templates/_accounts/index.html:8 templates/_home/index.html:20
+#: templates/base.html:132
+msgid "Home"
+msgstr "الرئيسية"
+
+#: templates/_accounts/add_member.html:9
+#: templates/_accounts/edit_member.html:10
+#: templates/_accounts/edit_member_password.html:10
+#: templates/_accounts/index.html:5 templates/_accounts/index.html:9
+msgid "Manage Members"
+msgstr ""
+
+#: templates/_accounts/add_member.html:17
+msgid "Add"
+msgstr ""
+
+#: templates/_accounts/edit_member.html:6
+#: templates/_accounts/edit_member.html:11
+#: templates/_accounts/edit_member.html:18
+#: templates/_accounts/edit_member_password.html:18
+msgid "Edit"
+msgstr ""
+
+#: templates/_accounts/edit_member_password.html:6
+#: templates/_accounts/edit_member_password.html:11
+msgid "Edit Password"
+msgstr ""
+
+#: templates/_accounts/index.html:16
+msgid "Add Members"
+msgstr ""
+
+#: templates/_accounts/index.html:22
+msgid "View By Users Types"
+msgstr ""
+
+#: templates/_accounts/index.html:28
+msgid "search member"
+msgstr ""
+
+#: templates/_accounts/index.html:65
+msgid "Users"
+msgstr ""
+
+#: templates/_accounts/index.html:69
+msgid "Name"
+msgstr ""
+
+#: templates/_accounts/index.html:70
+msgid "Phone"
+msgstr ""
+
+#: templates/_accounts/index.html:105
+#: templates/_frontend/_user_course/index.html:126
+#: templates/includes/pagination.html:16 templates/includes/pagination.html:20
+msgid "Previous"
+msgstr "السابق"
+
+#: templates/_accounts/index.html:108
+#: templates/_frontend/_user_course/index.html:129
+#: templates/includes/pagination.html:41 templates/includes/pagination.html:45
+msgid "Next"
+msgstr "التالي"
+
+#: templates/_accounts/index.html:145
+msgid "No Members"
+msgstr ""
+
+#: templates/_frontend/_course/detail.html:87
+msgid "discount"
+msgstr "تخفيض"
+
+#: templates/_frontend/_course/detail.html:100
+msgid "access"
+msgstr "وصول"
+
+#: templates/_frontend/_course/detail.html:113
+msgid "lectures List"
+msgstr "قائمة المحاضرات"
+
+#: templates/_frontend/_course/detail.html:135
+msgid "write comment"
+msgstr "اكتب تعليق"
+
+#: templates/_frontend/_course/detail.html:136
+msgid "comment"
+msgstr "علق"
+
+#: templates/_frontend/_course/detail.html:158
+msgid "Upload Payment Screenshot"
+msgstr "تحميل لقطة شاشة للدفع"
+
+#: templates/_frontend/_course/detail.html:167
+msgid "Step 1"
+msgstr "الخطوة 1"
+
+#: templates/_frontend/_course/detail.html:171
+msgid "Step 2"
+msgstr "الخطوة 2"
+
+#: templates/_frontend/_course/detail.html:194
+msgid "after paying course's fees with one of our payment methods"
+msgstr "بعد دفع رسوم الدورة بإحدى طرق الدفع لدينا"
+
+#: templates/_frontend/_course/detail.html:196
+msgid "you can scane the QR code for fatser paying process"
+msgstr "يمكنك مسح رمز الاستجابة السريعة لعملية الدفع"
+
+#: templates/_frontend/_course/detail.html:199
+msgid "keep a screenshot of payment receipt"
+msgstr "احتفظ بلقطة شاشة لإيصال الدفع"
+
+#: templates/_frontend/_course/detail.html:200
+msgid "to continue click on"
+msgstr "للمواصلة الضغط على"
+
+#: templates/_frontend/_course/detail.html:200
+msgid "Step 2 tab"
+msgstr ""
+
+#: templates/_frontend/_course/detail.html:208 templates/_home/index.html:59
+msgid "Choose file"
+msgstr "إختر ملف"
+
+#: templates/_frontend/_course/detail.html:212
+msgid "upload the receipt screenshot you took before"
+msgstr ""
+
+#: templates/_frontend/_course/detail.html:214
+msgid "is valid"
+msgstr "صيغة صحيحة"
+
+#: templates/_frontend/_course/detail.html:216
+msgid "enter an active phone number so our team can keep up with you"
+msgstr "تحميل لقطة شاشة الإيصال التي أخذتها من قبل"
+
+#: templates/_frontend/_course/detail.html:218
+msgid "Proceed"
+msgstr "تقدم"
+
+#: templates/_frontend/_course/detail.html:309
+#, fuzzy
+#| msgid "comment"
+msgid "comments"
+msgstr "تعليق"
+
+#: templates/_frontend/_course/detail.html:363
+msgid "no comments"
+msgstr "لا توجد تعليقات"
+
+#: templates/_frontend/_course/payment.html:20
+msgid "Pay Course Fees"
+msgstr "دفع رسوم الدورة"
+
+#: templates/_frontend/_course/payment.html:25
+msgid "Pay"
+msgstr "دفع"
+
+#: templates/_frontend/_registration/signin.html:20
+#: templates/_frontend/_registration/signin.html:26
+#: templates/_frontend/_registration/signup.html:27 templates/base.html:154
+msgid "Sign in"
+msgstr "تسجيل دخول"
+
+#: templates/_frontend/_registration/signin.html:27
+msgid "Not a member?"
+msgstr "مستخدم جديد ؟"
+
+#: templates/_frontend/_registration/signin.html:28
+msgid "Register"
+msgstr "تسجيل"
+
+#: templates/_frontend/_registration/signin.html:30
+msgid "Forgot your password ?"
+msgstr "نسيت كلمة المرور ؟"
+
+#: templates/_frontend/_registration/signin.html:31
+msgid "Reset from here"
+msgstr "إعادة تعيين من هنا"
+
+#: templates/_frontend/_registration/signup.html:21
+#: templates/_frontend/_registration/signup.html:25
+#: templates/_registration/signup.html:12 templates/base.html:155
+msgid "Sign up"
+msgstr "إنشاء حساب"
+
+#: templates/_frontend/_registration/signup.html:26
+msgid "already got an account ?"
+msgstr "لديك حساب مسبقاََ ؟"
+
+#: templates/_frontend/_user_course/index.html:21
+msgid "Accessed Courses"
+msgstr "الدورات التي تم الوصول إليها"
+
+#: templates/_frontend/_user_course/index.html:27
+msgid "Requested Courses"
+msgstr "الدورات المطلوبة"
+
+#: templates/_frontend/_user_course/index.html:34
+msgid "search accessed courses"
+msgstr ""
+
+#: templates/_frontend/_user_course/index.html:44
+msgid "search  requesteded courses"
+msgstr ""
+
+#: templates/_frontend/_user_course/index.html:90
+msgid "Course"
+msgstr "دورة تدريبية"
+
+#: templates/_frontend/_user_course/index.html:168
+#: templates/_frontend/index.html:291
+msgid "No Courses"
+msgstr "لا توجد دورات تدريبية"
+
+#: templates/_frontend/index.html:20
+msgid "Build your skills for the better"
+msgstr "بناء المهارات الخاصة بك الى الأفضل"
+
+#: templates/_frontend/index.html:22
+msgid ""
+"Through this platform you can take courses and training courses from various "
+"centers and institutes and from highly qualified trainers and teachers and a "
+"certified certificate"
+msgstr ""
+"عبر هذه المنصة يمكنك اخذ كورسات ودورات تدريبيه من مختلف المراكز والمعاهد ومن "
+"مدربين ومعلمين ذوي كفاءه عاليه وشهاده معتمده"
+
+#: templates/_frontend/index.html:40
+msgid "Most Requested Courses"
+msgstr "الدوات الأكثر طلباََ"
+
+#: templates/_frontend/index.html:56 templates/base.html:138
+msgid "Training Centers"
+msgstr "مراكز التدريب"
+
+#: templates/_frontend/index.html:71 templates/base.html:141
+msgid "Who are we"
+msgstr "من نحن"
+
+#: templates/_frontend/index.html:80
+msgid "Welcome To"
+msgstr "مرحبا بك الى"
+
+#: templates/_frontend/index.html:92
+msgid "Our Mission"
+msgstr "مهمتنا"
+
+#: templates/_frontend/index.html:105
+msgid "Our Vission"
+msgstr "رؤيتنا"
+
+#: templates/_frontend/index.html:120
+msgid "Key Feature"
+msgstr "ما يميزنا"
+
+#: templates/_frontend/index.html:133
+msgid "Our Goal"
+msgstr "هدفنا"
+
+#: templates/_frontend/index.html:145
+msgid "Subscribe to our newsletter"
+msgstr "إشترك الى نشرتنا الاعلانية"
+
+#: templates/_frontend/index.html:146
+msgid "enter your email address"
+msgstr "أدخل عنوان بريدك الالكتروني"
+
+#: templates/_frontend/index.html:189
+msgid "All"
+msgstr "الكل"
+
+#: templates/_frontend/index.html:363
+msgid "No Training Center"
+msgstr "لا توجد مراكز تدريب"
+
+#: templates/_home/index.html:26
+msgid "Create Menu"
+msgstr ""
+
+#: templates/_home/index.html:27 templates/_home/index.html:77
+msgid "Menu Permissions"
+msgstr ""
+
+#: templates/_home/index.html:41
+msgid "Add Menu"
+msgstr ""
+
+#: templates/_home/index.html:50
+msgid "select menu display priority"
+msgstr ""
+
+#: templates/_home/index.html:54
+msgid "Upload"
+msgstr "تحميل"
+
+#: templates/_home/index.html:65
+msgid "close"
+msgstr "أغلق"
+
+#: templates/_home/index.html:66
+msgid "save"
+msgstr "حفظ"
+
+#: templates/_registration/login.html:5
+msgid "Log in to"
+msgstr "تسجيل الدخول إلى"
+
+#: templates/_registration/login.html:12 templates/_registration/login.html:17
+#: templates/_registration/signup.html:20
+msgid "Log in"
+msgstr "تسجيل دخول"
+
+#: templates/_registration/signup.html:5
+msgid "Sign up to"
+msgstr ""
+
+#: templates/_registration/signup.html:16
+msgid "Create an account"
+msgstr "انشئ حساب"
+
+#: templates/_registration/signup.html:20
+msgid "Already have an account?"
+msgstr "هل لديك حساب ؟"
+
+#: templates/_reset/password_reset.html:6
+#: templates/_reset/password_reset.html:21
+#: templates/_reset/password_reset_confirm.html:10
+#: templates/_reset/password_reset_confirm.html:37
+#: templates/_reset/password_reset_done.html:6
+msgid "Reset your password"
+msgstr "إعادة تعيين كلمة المرور"
+
+#: templates/_reset/password_reset.html:23
+msgid ""
+"Enter your email address and we will send you a link to reset your password."
+msgstr ""
+"أدخل عنوان بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة "
+"بك."
+
+#: templates/_reset/password_reset.html:25
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#: templates/_reset/password_reset_complete.html:25
+msgid "Password changed"
+msgstr "تم تغيير كلمة السر"
+
+#: templates/_reset/password_reset_complete.html:27
+msgid ""
+"You have successfully changed your password! You may now proceed to log in."
+msgstr "لقد غيرت كلمة سرك بنجاح! يمكنك الآن المتابعة لتسجيل الدخول."
+
+#: templates/_reset/password_reset_complete.html:30
+#: templates/_reset/password_reset_done.html:26
+msgid "Return to log in"
+msgstr "العودة لتسجيل الدخول"
+
+#: templates/_reset/password_reset_confirm.html:8
+#: templates/_reset/password_reset_confirm.html:30
+msgid "Change password for "
+msgstr "تغيير كلمة المرور لـ"
+
+#: templates/_reset/password_reset_confirm.html:34
+#, fuzzy
+#| msgid "password"
+msgid "Change password"
+msgstr "كلمة المرور"
+
+#: templates/_reset/password_reset_confirm.html:39
+msgid ""
+"It looks like you clicked on an invalid password reset link. Please try "
+"again."
+msgstr ""
+"يبدو أنك نقرت على رابط إعادة تعيين كلمة المرور غير صالح. حاول مرة اخرى."
+
+#: templates/_reset/password_reset_confirm.html:42
+msgid "Request a new password reset link"
+msgstr "طلب رابط جديد لإعادة تعيين كلمة المرور"
+
+#: templates/_reset/password_reset_done.html:23
+msgid ""
+"Check your email for a link to reset your password. If it doesn't appear "
+"within a few minutes, check your spam folder."
+msgstr ""
+"تحقق من بريدك الإلكتروني للحصول على رابط لإعادة تعيين كلمة المرور الخاصة بك. "
+"إذا لم يظهر في غضون بضع دقائق ، فتحقق من مجلد الرسائل غير المرغوب فيها."
+
+#: templates/base.html:135
+msgid "Courses"
+msgstr "الدورات"
+
+#: templates/base.html:144
+msgid "Contact us"
+msgstr "إتصل بنا"
+
+#: templates/base.html:152
+msgid "Log out"
+msgstr "خروج"
+
+#: templates/base.html:200 templates/base.html:202
+msgid "Copyright"
+msgstr "حقوق النشر"
+
+#: templates/includes/pagination.html:6 templates/includes/pagination.html:10
+msgid "First"
+msgstr "الاول"
+
+#: templates/includes/pagination.html:51 templates/includes/pagination.html:55
+msgid "Last"
+msgstr "الاخير"
+
+#: trainome/settings.py:151
+msgid "Arabic"
+msgstr "عربي"
+
+#: trainome/settings.py:152
+msgid "English"
+msgstr "انجليزي"
