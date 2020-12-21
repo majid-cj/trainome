@@ -38,6 +38,8 @@ AUTH_USER_MODEL = "accounts.Member"
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -172,6 +174,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+JET_SIDE_MENU_COMPACT = True
+JET_DEFAULT_THEME = 'light-gray'
+JET_CHANGE_FORM_SIBLING_LINKS = True
 
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o766
 FILE_UPLOAD_PERMISSIONS = 0o766
